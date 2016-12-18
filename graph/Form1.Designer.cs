@@ -88,6 +88,7 @@
 			this.textBoxNum.Name = "textBoxNum";
 			this.textBoxNum.Size = new System.Drawing.Size(115, 20);
 			this.textBoxNum.TabIndex = 4;
+			this.textBoxNum.TextChanged += new System.EventHandler(this.textBoxNum_TextChanged);
 			// 
 			// label3
 			// 
@@ -141,6 +142,7 @@
 			this.buttonIn.TabIndex = 9;
 			this.buttonIn.Text = "Ввести";
 			this.buttonIn.UseVisualStyleBackColor = true;
+			this.buttonIn.Click += new System.EventHandler(this.buttonIn_Click);
 			// 
 			// buttonOut
 			// 
@@ -150,6 +152,7 @@
 			this.buttonOut.TabIndex = 10;
 			this.buttonOut.Text = "Вывести";
 			this.buttonOut.UseVisualStyleBackColor = true;
+			this.buttonOut.Click += new System.EventHandler(this.buttonOut_Click);
 			// 
 			// Form1
 			// 

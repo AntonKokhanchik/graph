@@ -19,6 +19,13 @@ namespace graph
 			InitializeComponent();
 		}
 
+		private void textBoxNum_TextChanged(object sender, EventArgs e)
+		{
+			if (textBoxNum.TextLength > 0)
+				buttonCreateGraph.Enabled = true;
+			else
+				buttonCreateGraph.Enabled = false;
+		}
 		private void buttonCreateGraph_Click(object sender, EventArgs e)
 		{
 			int num = Int32.Parse(textBoxNum.Text);
