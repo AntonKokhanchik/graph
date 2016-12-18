@@ -45,7 +45,7 @@ namespace graph
 						arr[ind] = new List<int>();
 						isFirst = false;
 					}
-					else if (word != "->" && word != "\r")
+					else if (word != "->")
 						arr[ind].Add(Int32.Parse(word));
 				}
 			}
