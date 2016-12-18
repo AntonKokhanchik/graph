@@ -26,6 +26,50 @@ namespace graph
 			else
 				buttonCreateGraph.Enabled = false;
 		}
+
+		private void buttonIn_Click(object sender, EventArgs e)
+		{
+			string[] graph = textBoxGraph.Text.Split('\n');
+			char[] sep = new char[] { ' ', ',', '\r' };
+			arr = new List<int>[graph.Length];
+
+			foreach (string row in graph)
+			{
+				bool isFirst = true;
+				int ind = 0;
+				foreach (string word in row.Split(sep, StringSplitOptions.RemoveEmptyEntries))
+				{
+					if (isFirst)
+					{
+						ind = Int32.Parse(word);
+						arr[ind] = new List<int>();
+						isFirst = false;
+					}
+					else if (word != "->" && word != "\r")
+						arr[ind].Add(Int32.Parse(word));
+				}
+			}
+		}
+
+		private void buttonOut_Click(object sender, EventArgs e)
+		{
+			StringBuilder graph = new StringBuilder("");
+
+			for (int i = 0; i < arr.Length; i++)
+			{
+				graph.AppendFormat("{0} -> ", i);
+				if (arr[i].Count != 0)
+				{
+					foreach (int el in arr[i])
+						graph.AppendFormat("{0}, ", el);
+					graph.Remove(graph.Length - 2, 2);
+				}
+				graph.Append("\r\n");
+			}
+
+			textBoxGraph.Text = graph.ToString(0, graph.Length - 1);
+		}
+
 		private void buttonCreateGraph_Click(object sender, EventArgs e)
 		{
 			int num = Int32.Parse(textBoxNum.Text);
@@ -57,8 +101,5 @@ namespace graph
 				//width[tmp]
 			}
 		}
-
-
-
 	}
 }
