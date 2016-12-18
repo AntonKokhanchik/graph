@@ -25,9 +25,14 @@ namespace graph
 			arr = new List<int>[num];
 
 			Random rand = new Random();
-			foreach(var el in arr)
-				for(int i = 0; i < rand.Next(0, num); i++)
-					el.Add(rand.Next(0, num-1));
+			for(int i = 0; i < num; i++)
+			{
+				arr[i] = new List<int>();
+				int tmp = rand.Next(0, num);
+
+				for (int j = 0; j < tmp; j++)
+					arr[i].Add(rand.Next(0, num - 1));
+			}
 		}
 
 		private void buttonTreversal_Click(object sender, EventArgs e)
