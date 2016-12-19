@@ -12,7 +12,7 @@ namespace graph
 {
 	public partial class Form1 : Form
 	{
-		private List<int>[] arr; 
+		private Dictionary<int, int>[] arr; 
 
 		public Form1()
 		{
@@ -30,23 +30,25 @@ namespace graph
 		private void buttonIn_Click(object sender, EventArgs e)
 		{
 			string[] graph = textBoxGraph.Text.Split('\n');
-			char[] sep = new char[] { ' ', ',', '\r' };
-			arr = new List<int>[graph.Length];
+			char[] wordSep = new char[] { ' ', '\r' };
+			char[] numSep = new char[] { ',', '(', ')' };
+			arr = new Dictionary<int, int>[graph.Length];
 
 			foreach (string row in graph)
 			{
-				bool isFirst = true;
 				int ind = 0;
-				foreach (string word in row.Split(sep, StringSplitOptions.RemoveEmptyEntries))
+				foreach (string word in row.Split(wordSep, StringSplitOptions.RemoveEmptyEntries))
 				{
-					if (isFirst)
+					if (!word.Contains("(") && word != "->")
 					{
 						ind = Int32.Parse(word);
-						arr[ind] = new List<int>();
-						isFirst = false;
+						arr[ind] = new Dictionary<int, int>();
 					}
 					else if (word != "->")
-						arr[ind].Add(Int32.Parse(word));
+					{
+						string[] num = word.Split(numSep, StringSplitOptions.RemoveEmptyEntries);
+						arr[ind].Add(Int32.Parse(num[0]), Int32.Parse(num[1]));
+					}
 				}
 			}
 		}
@@ -60,9 +62,9 @@ namespace graph
 				graph.AppendFormat("{0} -> ", i);
 				if (arr[i].Count != 0)
 				{
-					foreach (int el in arr[i])
-						graph.AppendFormat("{0}, ", el);
-					graph.Remove(graph.Length - 2, 2);
+					foreach (var el in arr[i])
+						graph.AppendFormat("({0},{1}) ", el.Key, el.Value);
+					graph.Remove(graph.Length - 1, 1);
 				}
 				graph.Append("\r\n");
 			}
@@ -73,16 +75,20 @@ namespace graph
 		private void buttonCreateGraph_Click(object sender, EventArgs e)
 		{
 			int num = Int32.Parse(textBoxNum.Text);
-			arr = new List<int>[num];
+			arr = new Dictionary<int, int>[num];
 
 			Random rand = new Random();
 			for(int i = 0; i < num; i++)
 			{
-				arr[i] = new List<int>();
+				arr[i] = new Dictionary<int, int>();
 				int tmp = rand.Next(0, num);
 
 				for (int j = 0; j < tmp; j++)
-					arr[i].Add(rand.Next(0, num - 1));
+					try
+					{
+						arr[i].Add(rand.Next(0, num - 1), rand.Next(0, 10));
+					}
+					catch (ArgumentException) { }
 			}
 		}
 
