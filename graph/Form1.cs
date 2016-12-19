@@ -103,8 +103,15 @@ namespace graph
 
 			while(q.Count != 0)
 			{
-				int tmp = q.Peek();
-				//width[tmp]
+				int tmp = q.Dequeue();
+
+				foreach (var el in arr[tmp])
+					if(!isVisited[el.Key])
+					{
+						q.Enqueue(el.Key);
+						isVisited[el.Key] = true;
+						width[tmp].Add(el.Key);
+					}
 			}
 		}
 	}
