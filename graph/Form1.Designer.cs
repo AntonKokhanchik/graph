@@ -43,30 +43,33 @@
 			// 
 			// textBoxGraph
 			// 
-			this.textBoxGraph.Location = new System.Drawing.Point(29, 43);
+			this.textBoxGraph.Location = new System.Drawing.Point(39, 53);
+			this.textBoxGraph.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.textBoxGraph.Multiline = true;
 			this.textBoxGraph.Name = "textBoxGraph";
 			this.textBoxGraph.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.textBoxGraph.Size = new System.Drawing.Size(535, 220);
+			this.textBoxGraph.Size = new System.Drawing.Size(712, 270);
 			this.textBoxGraph.TabIndex = 0;
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-			this.label1.Location = new System.Drawing.Point(25, 20);
+			this.label1.Location = new System.Drawing.Point(33, 25);
+			this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(333, 20);
+			this.label1.Size = new System.Drawing.Size(333, 25);
 			this.label1.TabIndex = 1;
-			this.label1.Text = "Введите список смежности вершин графа";
+			this.label1.Text = "Cписок смежности вершин графа";
 			// 
 			// buttonCreateGraph
 			// 
 			this.buttonCreateGraph.Enabled = false;
 			this.buttonCreateGraph.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-			this.buttonCreateGraph.Location = new System.Drawing.Point(29, 307);
+			this.buttonCreateGraph.Location = new System.Drawing.Point(39, 378);
+			this.buttonCreateGraph.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.buttonCreateGraph.Name = "buttonCreateGraph";
-			this.buttonCreateGraph.Size = new System.Drawing.Size(615, 40);
+			this.buttonCreateGraph.Size = new System.Drawing.Size(820, 49);
 			this.buttonCreateGraph.TabIndex = 2;
 			this.buttonCreateGraph.Text = "Создать граф";
 			this.buttonCreateGraph.UseVisualStyleBackColor = true;
@@ -76,17 +79,19 @@
 			// 
 			this.label2.AutoSize = true;
 			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-			this.label2.Location = new System.Drawing.Point(25, 284);
+			this.label2.Location = new System.Drawing.Point(33, 350);
+			this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(418, 20);
+			this.label2.Size = new System.Drawing.Size(514, 25);
 			this.label2.TabIndex = 3;
 			this.label2.Text = "Или задайте случайный граф с количеством вершин ";
 			// 
 			// textBoxNum
 			// 
-			this.textBoxNum.Location = new System.Drawing.Point(440, 286);
+			this.textBoxNum.Location = new System.Drawing.Point(587, 352);
+			this.textBoxNum.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.textBoxNum.Name = "textBoxNum";
-			this.textBoxNum.Size = new System.Drawing.Size(115, 20);
+			this.textBoxNum.Size = new System.Drawing.Size(152, 22);
 			this.textBoxNum.TabIndex = 4;
 			this.textBoxNum.TextChanged += new System.EventHandler(this.textBoxNum_TextChanged);
 			// 
@@ -94,9 +99,10 @@
 			// 
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-			this.label3.Location = new System.Drawing.Point(245, 381);
+			this.label3.Location = new System.Drawing.Point(327, 469);
+			this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(167, 24);
+			this.label3.Size = new System.Drawing.Size(213, 29);
 			this.label3.TabIndex = 5;
 			this.label3.Text = "Работа с графом:";
 			// 
@@ -104,9 +110,10 @@
 			// 
 			this.buttonTreversal.Enabled = false;
 			this.buttonTreversal.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-			this.buttonTreversal.Location = new System.Drawing.Point(29, 431);
+			this.buttonTreversal.Location = new System.Drawing.Point(39, 530);
+			this.buttonTreversal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.buttonTreversal.Name = "buttonTreversal";
-			this.buttonTreversal.Size = new System.Drawing.Size(615, 40);
+			this.buttonTreversal.Size = new System.Drawing.Size(820, 49);
 			this.buttonTreversal.TabIndex = 6;
 			this.buttonTreversal.Text = "Осуществить обход графа";
 			this.buttonTreversal.UseVisualStyleBackColor = true;
@@ -116,9 +123,10 @@
 			// 
 			this.buttonMinWay.Enabled = false;
 			this.buttonMinWay.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-			this.buttonMinWay.Location = new System.Drawing.Point(29, 518);
+			this.buttonMinWay.Location = new System.Drawing.Point(39, 638);
+			this.buttonMinWay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.buttonMinWay.Name = "buttonMinWay";
-			this.buttonMinWay.Size = new System.Drawing.Size(615, 40);
+			this.buttonMinWay.Size = new System.Drawing.Size(820, 49);
 			this.buttonMinWay.TabIndex = 7;
 			this.buttonMinWay.Text = "Найти кратчайший путь";
 			this.buttonMinWay.UseVisualStyleBackColor = true;
@@ -127,18 +135,20 @@
 			// 
 			this.buttonTree.Enabled = false;
 			this.buttonTree.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-			this.buttonTree.Location = new System.Drawing.Point(29, 611);
+			this.buttonTree.Location = new System.Drawing.Point(39, 752);
+			this.buttonTree.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.buttonTree.Name = "buttonTree";
-			this.buttonTree.Size = new System.Drawing.Size(615, 40);
+			this.buttonTree.Size = new System.Drawing.Size(820, 49);
 			this.buttonTree.TabIndex = 8;
 			this.buttonTree.Text = "Найти остовное дерево";
 			this.buttonTree.UseVisualStyleBackColor = true;
 			// 
 			// buttonIn
 			// 
-			this.buttonIn.Location = new System.Drawing.Point(570, 42);
+			this.buttonIn.Location = new System.Drawing.Point(760, 52);
+			this.buttonIn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.buttonIn.Name = "buttonIn";
-			this.buttonIn.Size = new System.Drawing.Size(73, 91);
+			this.buttonIn.Size = new System.Drawing.Size(97, 112);
 			this.buttonIn.TabIndex = 9;
 			this.buttonIn.Text = "Ввести";
 			this.buttonIn.UseVisualStyleBackColor = true;
@@ -146,9 +156,10 @@
 			// 
 			// buttonOut
 			// 
-			this.buttonOut.Location = new System.Drawing.Point(570, 172);
+			this.buttonOut.Location = new System.Drawing.Point(760, 212);
+			this.buttonOut.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.buttonOut.Name = "buttonOut";
-			this.buttonOut.Size = new System.Drawing.Size(73, 91);
+			this.buttonOut.Size = new System.Drawing.Size(97, 112);
 			this.buttonOut.TabIndex = 10;
 			this.buttonOut.Text = "Вывести";
 			this.buttonOut.UseVisualStyleBackColor = true;
@@ -156,9 +167,9 @@
 			// 
 			// Form1
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(680, 694);
+			this.ClientSize = new System.Drawing.Size(907, 733);
 			this.Controls.Add(this.buttonOut);
 			this.Controls.Add(this.buttonIn);
 			this.Controls.Add(this.buttonTree);
@@ -170,6 +181,7 @@
 			this.Controls.Add(this.buttonCreateGraph);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.textBoxGraph);
+			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.Name = "Form1";
 			this.Text = "Form1";
 			this.ResumeLayout(false);
