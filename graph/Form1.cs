@@ -27,6 +27,13 @@ namespace graph
 				buttonCreateGraph.Enabled = false;
 		}
 
+		private void textBoxGraph_TextChanged(object sender, EventArgs e)
+		{
+			buttonTreversal.Enabled = false;
+			buttonTree.Enabled = false;
+			buttonMinWay.Enabled = false;
+		}
+
 		private void buttonIn_Click(object sender, EventArgs e)
 		{
 			string[] graph = textBoxGraph.Text.Split('\n');
@@ -51,25 +58,15 @@ namespace graph
 					}
 				}
 			}
+
+			buttonTreversal.Enabled = true;
+			buttonTree.Enabled = true;
+			buttonMinWay.Enabled = true;
 		}
 
 		private void buttonOut_Click(object sender, EventArgs e)
 		{
-			StringBuilder graph = new StringBuilder("");
-
-			for (int i = 0; i < arr.Length; i++)
-			{
-				graph.AppendFormat("{0} -> ", i);
-				if (arr[i].Count != 0)
-				{
-					foreach (var el in arr[i])
-						graph.AppendFormat("({0},{1}) ", el.Key, el.Value);
-					graph.Remove(graph.Length - 1, 1);
-				}
-				graph.Append("\r\n");
-			}
-
-			textBoxGraph.Text = graph.ToString(0, graph.Length - 1);
+			Out(textBoxGraph, ref arr);
 		}
 
 		private void buttonCreateGraph_Click(object sender, EventArgs e)
@@ -88,14 +85,14 @@ namespace graph
 					{
 						arr[i].Add(rand.Next(0, num - 1), rand.Next(0, 10));
 					}
-					catch (ArgumentException) { }
+					catch (ArgumentException) { j--; }
 			}
 		}
 
 		private void buttonTreversal_Click(object sender, EventArgs e)
 		{
 			bool[] isVisited = new bool[arr.Length];
-			List<int>[] width = new List<int>[arr.Length];
+			Dictionary<int, int>[] width = new Dictionary<int, int>[arr.Length];
 			Queue<int> q = new Queue<int>();
 			
 			q.Enqueue(0);
@@ -104,15 +101,38 @@ namespace graph
 			while(q.Count != 0)
 			{
 				int tmp = q.Dequeue();
-
+				width[tmp] = new Dictionary<int, int>();
 				foreach (var el in arr[tmp])
 					if(!isVisited[el.Key])
 					{
 						q.Enqueue(el.Key);
 						isVisited[el.Key] = true;
-						width[tmp].Add(el.Key);
+						width[tmp].Add(el.Key, el.Value);
 					}
 			}
+
+			textBoxOut.Clear();
+			Out(textBoxOut, ref width);
 		}
+
+		private void Out(TextBox box, ref Dictionary<int, int>[] g)
+		{
+			StringBuilder graph = new StringBuilder("");
+
+			for (int i = 0; i < g.Length; i++)
+			{
+				graph.AppendFormat("{0} -> ", i);
+				if (g[i] != null && g[i].Count != 0)
+				{
+					foreach (var el in g[i])
+						graph.AppendFormat("({0},{1}) ", el.Key, el.Value);
+					graph.Remove(graph.Length - 1, 1);
+				}
+				graph.Append("\r\n");
+			}
+
+			box.Text = graph.ToString(0, graph.Length - 1);
+		}
+
 	}
 }
