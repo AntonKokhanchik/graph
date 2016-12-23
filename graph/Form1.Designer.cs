@@ -41,6 +41,8 @@
 			this.buttonOut = new System.Windows.Forms.Button();
 			this.textBoxOut = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
+			this.textBoxV = new System.Windows.Forms.TextBox();
+			this.label5 = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// textBoxGraph
@@ -121,10 +123,11 @@
 			this.buttonMinWay.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
 			this.buttonMinWay.Location = new System.Drawing.Point(29, 518);
 			this.buttonMinWay.Name = "buttonMinWay";
-			this.buttonMinWay.Size = new System.Drawing.Size(639, 40);
+			this.buttonMinWay.Size = new System.Drawing.Size(469, 40);
 			this.buttonMinWay.TabIndex = 7;
 			this.buttonMinWay.Text = "Найти кратчайший путь";
 			this.buttonMinWay.UseVisualStyleBackColor = true;
+			this.buttonMinWay.Click += new System.EventHandler(this.buttonMinWay_Click);
 			// 
 			// buttonTree
 			// 
@@ -175,11 +178,30 @@
 			this.label4.TabIndex = 12;
 			this.label4.Text = "Результат";
 			// 
+			// textBoxV
+			// 
+			this.textBoxV.Location = new System.Drawing.Point(527, 538);
+			this.textBoxV.Name = "textBoxV";
+			this.textBoxV.Size = new System.Drawing.Size(100, 20);
+			this.textBoxV.TabIndex = 13;
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+			this.label5.Location = new System.Drawing.Point(524, 518);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(103, 20);
+			this.label5.TabIndex = 14;
+			this.label5.Text = "От вершины";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1187, 686);
+			this.Controls.Add(this.label5);
+			this.Controls.Add(this.textBoxV);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.textBoxOut);
 			this.Controls.Add(this.buttonOut);
@@ -215,6 +237,8 @@
 		private System.Windows.Forms.Button buttonOut;
 		private System.Windows.Forms.TextBox textBoxOut;
 		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.TextBox textBoxV;
+		private System.Windows.Forms.Label label5;
 
 
 	}
