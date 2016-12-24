@@ -110,10 +110,6 @@ namespace graph
 			bool[] isVisited = new bool[graph.Length];
 			int[] distance = new int[graph.Length];
 
-			way[v] = -2;
-			isVisited[v] = true;
-			distance[v] = -2;
-
 			for (int j = 0; j < graph.Length; j++)
 			{
 				int val;
@@ -128,22 +124,49 @@ namespace graph
 					way[j] = -1;
 				}
 			}
-			//TODO: дописать
 
-			int tmp = indexOfMin(distance);
+			way[v] = -2;
+			isVisited[v] = true;
+			distance[v] = -2;
+
+			int tmp = indexOfMin(distance, isVisited);
 			for (int i = 1; i < graph.Length; i++)
 			{
 				isVisited[tmp] = true;
 				for (int j = 0; j < graph.Length; j++)
 				{
 					int val;
-					if (arr[tmp].TryGetValue(j, out val) && distance[tmp] != -1 && distance[tmp] != -2 && val + distance[tmp] < distance[j])
-					{
-						distance[j] = val + distance[tmp];
-						way[j] = tmp;
-					}
+					if (graph[tmp].TryGetValue(j, out val) /*&& distance[tmp] != -1 && distance[tmp] != -2*/)
+						if(distance[j] == -1 || val + distance[tmp] < distance[j])
+						{
+							distance[j] = val + distance[tmp];
+							way[j] = tmp;
+						}
 				}
+				tmp = indexOfMin(distance, isVisited);
+				if (tmp == -1)
+					break;
 			}
+
+			textBoxOut.Clear();
+			outMinWay(distance, way, v);
+		}
+
+		private void outMinWay(int[] d, int[] w, int v)
+		{
+			textBoxOut.AppendText("Пути (куда <- откуда):\n");
+			for(int i=0; i<w.Length; i++)
+				if(w[i] != -1 && w[i] != -2)
+					textBoxOut.AppendText(i + " <- " + w[i] + "\n");
+				else if (w[i] == -1)
+					textBoxOut.AppendText("нет пути в вершину " + i + "\n");
+
+			textBoxOut.AppendText("\n\nкратчайший путь от вершины " + v + ":\n");
+			for (int i = 0; i < d.Length; i++)
+				if (d[i] != -1 && d[i] != -2)
+					textBoxOut.AppendText("в вершину " + i + ":" + d[i] + "\n");
+				else if (w[i] == -1)
+					textBoxOut.AppendText("в вершину " + i + ": нет пути\n");
 		}
 
 		private void Out(TextBox box, Dictionary<int, int>[] g)
@@ -189,12 +212,15 @@ namespace graph
 			return width;
 		}
 
-		private int indexOfMin(int[] a)
+		private int indexOfMin(int[] a, bool[] isVisited)
 		{
-			int min = 0;
-			for(int i = 1; i < a.Length; i++)
-				if (a[i] < a[min] && a[i] != -1 && a[i] != -2)
-					min = i;
+			int min = -1;
+			for (int i = 0; i < a.Length; i++)
+				if (a[i] != -1 && a[i] != -2 && !isVisited[i])
+					if (min == -1)
+						min = i;
+					else if(a[i] < a[min])
+						min = i;
 			return min;
 		}
 	}
