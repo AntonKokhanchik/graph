@@ -12,7 +12,7 @@ namespace graph
 {
 	public partial class Form1 : Form
 	{
-		private Dictionary<int, int>[] arr; 
+		private Dictionary<int, int>[] graph; 
 
 		public Form1()
 		{
@@ -36,12 +36,12 @@ namespace graph
 
 		private void buttonIn_Click(object sender, EventArgs e)
 		{
-			string[] graph = textBoxGraph.Text.Split('\n');
+			string[] graphStr = textBoxGraph.Text.Split('\n');
 			char[] wordSep = new char[] { ' ', '\r' };
 			char[] numSep = new char[] { ',', '(', ')' };
-			arr = new Dictionary<int, int>[graph.Length];
+			graph = new Dictionary<int, int>[graphStr.Length];
 
-			foreach (string row in graph)
+			foreach (string row in graphStr)
 			{
 				int ind = 0;
 				foreach (string word in row.Split(wordSep, StringSplitOptions.RemoveEmptyEntries))
@@ -49,12 +49,12 @@ namespace graph
 					if (!word.Contains("(") && word != "->")
 					{
 						ind = Int32.Parse(word);
-						arr[ind] = new Dictionary<int, int>();
+						graph[ind] = new Dictionary<int, int>();
 					}
 					else if (word != "->")
 					{
 						string[] num = word.Split(numSep, StringSplitOptions.RemoveEmptyEntries);
-						arr[ind].Add(Int32.Parse(num[0]), Int32.Parse(num[1]));
+						graph[ind].Add(Int32.Parse(num[0]), Int32.Parse(num[1]));
 					}
 				}
 			}
@@ -66,26 +66,31 @@ namespace graph
 
 		private void buttonOut_Click(object sender, EventArgs e)
 		{
-			Out(textBoxGraph, arr);
+			Out(textBoxGraph, graph);
 		}
 
 		private void buttonCreateGraph_Click(object sender, EventArgs e)
 		{
 			int num = Int32.Parse(textBoxNum.Text);
-			arr = new Dictionary<int, int>[num];
+			graph = new Dictionary<int, int>[num];
 
 			Random rand = new Random();
 			for(int i = 0; i < num; i++)
 			{
-				arr[i] = new Dictionary<int, int>();
-				int tmp = rand.Next(0, num);
+				graph[i] = new Dictionary<int, int>();
+				int numberRibs = rand.Next(0, num-1);
 
-				for (int j = 0; j < tmp; j++)
+				for (int j = 0; j < numberRibs; )
 					try
 					{
-						arr[i].Add(rand.Next(0, num - 1), rand.Next(0, 10));
+						int rib = rand.Next(0, num - 1);
+						if (rib != i)
+						{
+							graph[i].Add(rib, rand.Next(0, 10));
+							j++;
+						}
 					}
-					catch (ArgumentException) { j--; }
+					catch (ArgumentException) { }
 			}
 		}
 
@@ -101,18 +106,18 @@ namespace graph
 			if(!Int32.TryParse(textBoxV.Text, out v))
 				v = 0;
 
-			int[] way = new int[arr.Length];
-			bool[] isVisited = new bool[arr.Length];
-			int[] distance = new int[arr.Length];
+			int[] way = new int[graph.Length];
+			bool[] isVisited = new bool[graph.Length];
+			int[] distance = new int[graph.Length];
 
 			way[v] = -2;
 			isVisited[v] = true;
 			distance[v] = -2;
 
-			for (int j = 0; j < arr.Length; j++)
+			for (int j = 0; j < graph.Length; j++)
 			{
 				int val;
-				if (arr[v].TryGetValue(j, out val))
+				if (graph[v].TryGetValue(j, out val))
 				{
 					distance[j] = val;
 					way[j] = v;
@@ -126,10 +131,10 @@ namespace graph
 			//TODO: дописать
 
 			int tmp = indexOfMin(distance);
-			for (int i = 1; i < arr.Length; i++)
+			for (int i = 1; i < graph.Length; i++)
 			{
 				isVisited[tmp] = true;
-				for (int j = 0; j < arr.Length; j++)
+				for (int j = 0; j < graph.Length; j++)
 				{
 					int val;
 					if (arr[tmp].TryGetValue(j, out val) && distance[tmp] != -1 && distance[tmp] != -2 && val + distance[tmp] < distance[j])
@@ -143,27 +148,27 @@ namespace graph
 
 		private void Out(TextBox box, Dictionary<int, int>[] g)
 		{
-			StringBuilder graph = new StringBuilder("");
+			StringBuilder outStr = new StringBuilder("");
 
 			for (int i = 0; i < g.Length; i++)
 			{
-				graph.AppendFormat("{0} -> ", i);
+				outStr.AppendFormat("{0} -> ", i);
 				if (g[i] != null && g[i].Count != 0)
 				{
 					foreach (var el in g[i])
-						graph.AppendFormat("({0},{1}) ", el.Key, el.Value);
-					graph.Remove(graph.Length - 1, 1);
+						outStr.AppendFormat("({0},{1}) ", el.Key, el.Value);
+					outStr.Remove(outStr.Length - 1, 1);
 				}
-				graph.Append("\r\n");
+				outStr.Append("\r\n");
 			}
 
-			box.Text = graph.ToString(0, graph.Length - 1);
+			box.Text = outStr.ToString(0, outStr.Length - 1);
 		}
 
 		private Dictionary<int, int>[] traversal(int v)
 		{
-			bool[] isVisited = new bool[arr.Length];
-			Dictionary<int, int>[] width = new Dictionary<int, int>[arr.Length];
+			bool[] isVisited = new bool[graph.Length];
+			Dictionary<int, int>[] width = new Dictionary<int, int>[graph.Length];
 			Queue<int> q = new Queue<int>();
 
 			q.Enqueue(v);
@@ -173,7 +178,7 @@ namespace graph
 			{
 				int tmp = q.Dequeue();
 				width[tmp] = new Dictionary<int, int>();
-				foreach (var el in arr[tmp])
+				foreach (var el in graph[tmp])
 					if (!isVisited[el.Key])
 					{
 						q.Enqueue(el.Key);
