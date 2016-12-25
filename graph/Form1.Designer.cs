@@ -140,6 +140,7 @@
 			this.buttonTree.TabIndex = 8;
 			this.buttonTree.Text = "Найти остовное дерево";
 			this.buttonTree.UseVisualStyleBackColor = true;
+			this.buttonTree.Click += new System.EventHandler(this.buttonTree_Click);
 			// 
 			// buttonIn
 			// 

@@ -239,5 +239,36 @@ namespace graph
 			textBoxGraph.Clear();
 			Out(textBoxGraph, graph);
 		}
+
+		private void buttonTree_Click(object sender, EventArgs e)
+		{
+			List<int> connected = new List<int>();
+			Dictionary<int, int>[] tree = new Dictionary<int, int>[graph.Length];
+			for (int i = 0; i < tree.Length; i++)
+				tree[i] = new Dictionary<int, int>();
+
+			connected.Add(0);
+
+			while (true)
+			{
+				int[] min = { -1, -1, -1 }; // откуда, куда, сколько - ребро
+				foreach (int i in connected)
+					foreach (var v in graph[i])
+						if (!connected.Contains(v.Key))
+							if (min[2] == -1 || v.Value < min[2])
+							{
+								min[0] = i;
+								min[1] = v.Key;
+								min[2] = v.Value;
+							}
+
+				if (min[2] == -1)
+					break;      // нет больше подходящих рёбер
+
+				connected.Add(min[1]);
+				tree[min[0]].Add(min[1], min[2]);
+			}
+			Out(textBoxOut, tree);
+		}
 	}
 }
