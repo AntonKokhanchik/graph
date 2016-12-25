@@ -43,6 +43,7 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.textBoxV = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
+			this.buttonNonOrient = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// textBoxGraph
@@ -195,11 +196,22 @@
 			this.label5.TabIndex = 14;
 			this.label5.Text = "От вершины";
 			// 
+			// buttonNonOrient
+			// 
+			this.buttonNonOrient.Location = new System.Drawing.Point(504, 277);
+			this.buttonNonOrient.Name = "buttonNonOrient";
+			this.buttonNonOrient.Size = new System.Drawing.Size(164, 27);
+			this.buttonNonOrient.TabIndex = 15;
+			this.buttonNonOrient.Text = "сделать неориентированным";
+			this.buttonNonOrient.UseVisualStyleBackColor = true;
+			this.buttonNonOrient.Click += new System.EventHandler(this.buttonNonOrient_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1187, 686);
+			this.Controls.Add(this.buttonNonOrient);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.textBoxV);
 			this.Controls.Add(this.label4);
@@ -239,8 +251,7 @@
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.TextBox textBoxV;
 		private System.Windows.Forms.Label label5;
-
-
+		private System.Windows.Forms.Button buttonNonOrient;
 	}
 }
 

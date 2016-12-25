@@ -223,5 +223,21 @@ namespace graph
 						min = i;
 			return min;
 		}
+
+		private void buttonNonOrient_Click(object sender, EventArgs e)
+		{
+			for(int i=0; i<graph.Length; i++)
+			{
+				foreach (var el in graph[i])
+				{
+					if (graph[el.Key].ContainsKey(i))
+						graph[el.Key][i] = el.Value;
+					else
+						graph[el.Key].Add(i, el.Value);
+				}
+			}
+			textBoxGraph.Clear();
+			Out(textBoxGraph, graph);
+		}
 	}
 }
