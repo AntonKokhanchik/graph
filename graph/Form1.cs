@@ -34,11 +34,66 @@ namespace graph
 			buttonMinWay.Enabled = false;
 		}
 
-		private void buttonIn_Click(object sender, EventArgs e)
+		private void buttonUse_Click(object sender, EventArgs e)
 		{
-			string[] graphStr = textBoxGraph.Text.Split('\n');
-			char[] wordSep = new char[] { ' ', '\r' };
-			char[] numSep = new char[] { ',', '(', ')' };
+			getGraph();
+
+			buttonTreversal.Enabled = true;
+			buttonTree.Enabled = true;
+			buttonMinWay.Enabled = true;
+		}
+
+		private void buttonOut_Click(object sender, EventArgs e)
+		{
+			textBoxGraph.Clear();
+			outGraph(textBoxGraph, graph);
+		}
+
+		private void buttonCreateGraph_Click(object sender, EventArgs e)
+		{
+			createGraph();
+			outGraph(textBoxGraph, graph);
+		}
+
+		private void buttonNonOrient_Click(object sender, EventArgs e)
+		{
+			getGraph();
+			nonOrientGraph();
+			textBoxGraph.Clear();
+			outGraph(textBoxGraph, graph);
+		}
+
+		private void buttonTreversal_Click(object sender, EventArgs e)
+		{
+			textBoxOut.Clear();
+			outGraph(textBoxOut, traversalWidth(0));
+		}
+
+		private void buttonMinWay_Click(object sender, EventArgs e)
+		{
+			textBoxOut.Clear();
+			int v;
+			if (!Int32.TryParse(textBoxV.Text, out v))
+				v = 0;
+			minWay(v);
+		}
+
+		private void buttonTree_Click(object sender, EventArgs e)
+		{
+			textBoxOut.Clear();
+			minTree();
+		}
+
+		/// <summary>
+		/// принимает граф из входного текстбокса
+		/// </summary>
+		private void getGraph()
+		{
+			char[] strSep = { '\n', '\r' };
+			char[] wordSep = { ' ' };
+			char[] numSep = new char[] { ',', '(', ')' }; // разделители
+
+			string[] graphStr = textBoxGraph.Text.Split(strSep, StringSplitOptions.RemoveEmptyEntries);
 			graph = new Dictionary<int, int>[graphStr.Length];
 
 			foreach (string row in graphStr)
@@ -58,27 +113,43 @@ namespace graph
 					}
 				}
 			}
-
-			buttonTreversal.Enabled = true;
-			buttonTree.Enabled = true;
-			buttonMinWay.Enabled = true;
 		}
 
-		private void buttonOut_Click(object sender, EventArgs e)
+		/// <summary>
+		/// выводит указанный граф в указанный текстбокс
+		/// </summary>
+		private void outGraph(TextBox box, Dictionary<int, int>[] g)
 		{
-			Out(textBoxGraph, graph);
+			StringBuilder outStr = new StringBuilder("");
+
+			for (int i = 0; i < g.Length; i++)
+			{
+				outStr.AppendFormat("{0} -> ", i);
+				if (g[i] != null && g[i].Count != 0)
+				{
+					foreach (var el in g[i])
+						outStr.AppendFormat("({0},{1}) ", el.Key, el.Value);
+					outStr.Remove(outStr.Length - 1, 1);
+				}
+				outStr.Append("\r\n");
+			}
+
+			box.Text = outStr.ToString(0, outStr.Length - 1);
 		}
 
-		private void buttonCreateGraph_Click(object sender, EventArgs e)
+		/// <summary>
+		/// создаёт случайный ориентированный граф без петель
+		/// </summary>
+		private void createGraph()
 		{
 			int num = Int32.Parse(textBoxNum.Text);
 			graph = new Dictionary<int, int>[num];
 
 			Random rand = new Random();
-			for(int i = 0; i < num; i++)
+			for (int i = 0; i < num; i++)
 			{
 				graph[i] = new Dictionary<int, int>();
-				int numberRibs = rand.Next(0, num-1);
+				int numberRibs = rand.Next(0, num - 1);
 
 				for (int j = 0; j < numberRibs; )
 					try
@@ -94,18 +165,55 @@ namespace graph
 			}
 		}
 
-		private void buttonTreversal_Click(object sender, EventArgs e)
+		/// <summary>
+		/// делает граф неориентированным
+		/// </summary>
+		private void nonOrientGraph()
 		{
-			textBoxOut.Clear();
-			Out(textBoxOut, traversal(0));
+			for (int i = 0; i < graph.Length; i++)
+			{
+				foreach (var el in graph[i])
+				{
+					if (graph[el.Key].ContainsKey(i))
+						graph[el.Key][i] = el.Value;
+					else
+						graph[el.Key].Add(i, el.Value);
+				}
+			}
 		}
 
-		private void buttonMinWay_Click(object sender, EventArgs e)
+		/// <summary>
+		/// производит обход графа по ширине из указанной вершины, возвращает подграф обхода
+		/// </summary>
+		private Dictionary<int, int>[] traversalWidth(int v)
 		{
-			int v;
-			if(!Int32.TryParse(textBoxV.Text, out v))
-				v = 0;
+			bool[] isVisited = new bool[graph.Length];
+			Dictionary<int, int>[] width = new Dictionary<int, int>[graph.Length];
+			Queue<int> q = new Queue<int>();
 
+			q.Enqueue(v);
+			isVisited[v] = true;
+
+			while (q.Count != 0)
+			{
+				int tmp = q.Dequeue();
+				width[tmp] = new Dictionary<int, int>();
+				foreach (var el in graph[tmp])
+					if (!isVisited[el.Key])
+					{
+						q.Enqueue(el.Key);
+						isVisited[el.Key] = true;
+						width[tmp].Add(el.Key, el.Value);
+					}
+			}
+			return width;
+		}
+
+		/// <summary>
+		/// находит кртчайшие пути из указанной вершины, используя алгоритм Дейкстры
+		/// </summary>
+		private void minWay(int v)
+		{
 			int[] way = new int[graph.Length];
 			bool[] isVisited = new bool[graph.Length];
 			int[] distance = new int[graph.Length];
@@ -136,8 +244,8 @@ namespace graph
 				for (int j = 0; j < graph.Length; j++)
 				{
 					int val;
-					if (graph[tmp].TryGetValue(j, out val) /*&& distance[tmp] != -1 && distance[tmp] != -2*/)
-						if(distance[j] == -1 || val + distance[tmp] < distance[j])
+					if (graph[tmp].TryGetValue(j, out val))
+						if (distance[j] == -1 || val + distance[tmp] < distance[j])
 						{
 							distance[j] = val + distance[tmp];
 							way[j] = tmp;
@@ -147,71 +255,12 @@ namespace graph
 				if (tmp == -1)
 					break;
 			}
-
-			textBoxOut.Clear();
 			outMinWay(distance, way, v);
 		}
 
-		private void outMinWay(int[] d, int[] w, int v)
-		{
-			textBoxOut.AppendText("Пути (куда <- откуда):\n");
-			for(int i=0; i<w.Length; i++)
-				if(w[i] != -1 && w[i] != -2)
-					textBoxOut.AppendText(i + " <- " + w[i] + "\n");
-				else if (w[i] == -1)
-					textBoxOut.AppendText("нет пути в вершину " + i + "\n");
-
-			textBoxOut.AppendText("\n\nкратчайший путь от вершины " + v + ":\n");
-			for (int i = 0; i < d.Length; i++)
-				if (d[i] != -1 && d[i] != -2)
-					textBoxOut.AppendText("в вершину " + i + ":" + d[i] + "\n");
-				else if (w[i] == -1)
-					textBoxOut.AppendText("в вершину " + i + ": нет пути\n");
-		}
-
-		private void Out(TextBox box, Dictionary<int, int>[] g)
-		{
-			StringBuilder outStr = new StringBuilder("");
-
-			for (int i = 0; i < g.Length; i++)
-			{
-				outStr.AppendFormat("{0} -> ", i);
-				if (g[i] != null && g[i].Count != 0)
-				{
-					foreach (var el in g[i])
-						outStr.AppendFormat("({0},{1}) ", el.Key, el.Value);
-					outStr.Remove(outStr.Length - 1, 1);
-				}
-				outStr.Append("\r\n");
-			}
-
-			box.Text = outStr.ToString(0, outStr.Length - 1);
-		}
-
-		private Dictionary<int, int>[] traversal(int v)
-		{
-			bool[] isVisited = new bool[graph.Length];
-			Dictionary<int, int>[] width = new Dictionary<int, int>[graph.Length];
-			Queue<int> q = new Queue<int>();
-
-			q.Enqueue(v);
-			isVisited[v] = true;
-
-			while (q.Count != 0)
-			{
-				int tmp = q.Dequeue();
-				width[tmp] = new Dictionary<int, int>();
-				foreach (var el in graph[tmp])
-					if (!isVisited[el.Key])
-					{
-						q.Enqueue(el.Key);
-						isVisited[el.Key] = true;
-						width[tmp].Add(el.Key, el.Value);
-					}
-			}
-			return width;
-		}
-
+		/// <summary>
+		/// высчитывает индекс очередного минимального пути
+		/// </summary>
 		private int indexOfMin(int[] a, bool[] isVisited)
 		{
 			int min = -1;
@@ -224,23 +273,30 @@ namespace graph
 			return min;
 		}
 
-		private void buttonNonOrient_Click(object sender, EventArgs e)
+		/// <summary>
+		/// выводит данные о кратчайших путях
+		/// </summary>
+		private void outMinWay(int[] d, int[] w, int v)
 		{
-			for(int i=0; i<graph.Length; i++)
-			{
-				foreach (var el in graph[i])
-				{
-					if (graph[el.Key].ContainsKey(i))
-						graph[el.Key][i] = el.Value;
-					else
-						graph[el.Key].Add(i, el.Value);
-				}
-			}
-			textBoxGraph.Clear();
-			Out(textBoxGraph, graph);
+			textBoxOut.AppendText("Пути (куда <- откуда):\n");
+			for (int i = 0; i < w.Length; i++)
+				if (w[i] != -1 && w[i] != -2)
+					textBoxOut.AppendText(i + " <- " + w[i] + "\n");
+				else if (w[i] == -1)
+					textBoxOut.AppendText("нет пути в вершину " + i + "\n");
+
+			textBoxOut.AppendText("\n\nкратчайший путь от вершины " + v + ":\n");
+			for (int i = 0; i < d.Length; i++)
+				if (d[i] != -1 && d[i] != -2)
+					textBoxOut.AppendText("в вершину " + i + ":" + d[i] + "\n");
+				else if (w[i] == -1)
+					textBoxOut.AppendText("в вершину " + i + ": нет пути\n");
 		}
 
-		private void buttonTree_Click(object sender, EventArgs e)
+		/// <summary>
+		/// находит остовное дерево минимального веса, используя алгоритм Прима
+		/// </summary>
+		private void minTree()
 		{
 			List<int> connected = new List<int>();
 			Dictionary<int, int>[] tree = new Dictionary<int, int>[graph.Length];
@@ -268,7 +324,7 @@ namespace graph
 				connected.Add(min[1]);
 				tree[min[0]].Add(min[1], min[2]);
 			}
-			Out(textBoxOut, tree);
+			outGraph(textBoxOut, tree);
 		}
 	}
 }

@@ -37,7 +37,7 @@
 			this.buttonTreversal = new System.Windows.Forms.Button();
 			this.buttonMinWay = new System.Windows.Forms.Button();
 			this.buttonTree = new System.Windows.Forms.Button();
-			this.buttonIn = new System.Windows.Forms.Button();
+			this.buttonUse = new System.Windows.Forms.Button();
 			this.buttonOut = new System.Windows.Forms.Button();
 			this.textBoxOut = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
@@ -142,15 +142,15 @@
 			this.buttonTree.UseVisualStyleBackColor = true;
 			this.buttonTree.Click += new System.EventHandler(this.buttonTree_Click);
 			// 
-			// buttonIn
+			// buttonUse
 			// 
-			this.buttonIn.Location = new System.Drawing.Point(570, 42);
-			this.buttonIn.Name = "buttonIn";
-			this.buttonIn.Size = new System.Drawing.Size(98, 91);
-			this.buttonIn.TabIndex = 9;
-			this.buttonIn.Text = "Использовать";
-			this.buttonIn.UseVisualStyleBackColor = true;
-			this.buttonIn.Click += new System.EventHandler(this.buttonIn_Click);
+			this.buttonUse.Location = new System.Drawing.Point(570, 42);
+			this.buttonUse.Name = "buttonUse";
+			this.buttonUse.Size = new System.Drawing.Size(98, 91);
+			this.buttonUse.TabIndex = 9;
+			this.buttonUse.Text = "Использовать";
+			this.buttonUse.UseVisualStyleBackColor = true;
+			this.buttonUse.Click += new System.EventHandler(this.buttonUse_Click);
 			// 
 			// buttonOut
 			// 
@@ -218,7 +218,7 @@
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.textBoxOut);
 			this.Controls.Add(this.buttonOut);
-			this.Controls.Add(this.buttonIn);
+			this.Controls.Add(this.buttonUse);
 			this.Controls.Add(this.buttonTree);
 			this.Controls.Add(this.buttonMinWay);
 			this.Controls.Add(this.buttonTreversal);
@@ -246,7 +246,7 @@
 		private System.Windows.Forms.Button buttonTreversal;
 		private System.Windows.Forms.Button buttonMinWay;
 		private System.Windows.Forms.Button buttonTree;
-		private System.Windows.Forms.Button buttonIn;
+		private System.Windows.Forms.Button buttonUse;
 		private System.Windows.Forms.Button buttonOut;
 		private System.Windows.Forms.TextBox textBoxOut;
 		private System.Windows.Forms.Label label4;
