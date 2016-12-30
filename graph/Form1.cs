@@ -278,14 +278,25 @@ namespace graph
 		/// </summary>
 		private void outMinWay(int[] d, int[] w, int v)
 		{
-			textBoxOut.AppendText("Пути (куда <- откуда):\n");
+			textBoxOut.AppendText("Пути:\n");
 			for (int i = 0; i < w.Length; i++)
 				if (w[i] != -1 && w[i] != -2)
-					textBoxOut.AppendText(i + " <- " + w[i] + "\n");
+				{
+					textBoxOut.AppendText(i + " <- ");
+					int tmp = w[i];
+					while (tmp != v)
+					{
+						textBoxOut.AppendText(tmp + " <- ");
+						tmp = w[tmp];
+					}
+					textBoxOut.AppendText(v + "\n");
+				}
 				else if (w[i] == -1)
 					textBoxOut.AppendText("нет пути в вершину " + i + "\n");
+				else if (w[i] == -2)
+					textBoxOut.AppendText("начинаем с вершины " + i + "\n");
 
-			textBoxOut.AppendText("\n\nкратчайший путь от вершины " + v + ":\n");
+			textBoxOut.AppendText("\r\nкратчайший путь от вершины " + v + ":\n");
 			for (int i = 0; i < d.Length; i++)
 				if (d[i] != -1 && d[i] != -2)
 					textBoxOut.AppendText("в вершину " + i + ":" + d[i] + "\n");
@@ -325,6 +336,11 @@ namespace graph
 				tree[min[0]].Add(min[1], min[2]);
 			}
 			outGraph(textBoxOut, tree);
+			int weight = 0;
+			for (int i = 0; i < tree.Length; i++)
+				foreach (var v in tree[i])
+					weight += v.Value;
+			textBoxOut.AppendText("\nВес дерева: " + weight.ToString());
 		}
 	}
 }

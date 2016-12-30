@@ -90,7 +90,7 @@
 			// 
 			// textBoxNum
 			// 
-			this.textBoxNum.Location = new System.Drawing.Point(449, 286);
+			this.textBoxNum.Location = new System.Drawing.Point(438, 286);
 			this.textBoxNum.Name = "textBoxNum";
 			this.textBoxNum.Size = new System.Drawing.Size(49, 20);
 			this.textBoxNum.TabIndex = 4;
@@ -114,7 +114,7 @@
 			this.buttonTreversal.Name = "buttonTreversal";
 			this.buttonTreversal.Size = new System.Drawing.Size(639, 40);
 			this.buttonTreversal.TabIndex = 6;
-			this.buttonTreversal.Text = "Осуществить обход графа";
+			this.buttonTreversal.Text = "Осуществить обход графа по ширине";
 			this.buttonTreversal.UseVisualStyleBackColor = true;
 			this.buttonTreversal.Click += new System.EventHandler(this.buttonTreversal_Click);
 			// 
@@ -138,7 +138,7 @@
 			this.buttonTree.Name = "buttonTree";
 			this.buttonTree.Size = new System.Drawing.Size(639, 40);
 			this.buttonTree.TabIndex = 8;
-			this.buttonTree.Text = "Найти остовное дерево";
+			this.buttonTree.Text = "Найти остовное дерево минимального веса";
 			this.buttonTree.UseVisualStyleBackColor = true;
 			this.buttonTree.Click += new System.EventHandler(this.buttonTree_Click);
 			// 
@@ -199,11 +199,11 @@
 			// 
 			// buttonNonOrient
 			// 
-			this.buttonNonOrient.Location = new System.Drawing.Point(504, 277);
+			this.buttonNonOrient.Location = new System.Drawing.Point(493, 277);
 			this.buttonNonOrient.Name = "buttonNonOrient";
-			this.buttonNonOrient.Size = new System.Drawing.Size(164, 27);
+			this.buttonNonOrient.Size = new System.Drawing.Size(175, 27);
 			this.buttonNonOrient.TabIndex = 15;
-			this.buttonNonOrient.Text = "сделать неориентированным";
+			this.buttonNonOrient.Text = "Cделать неориентированным";
 			this.buttonNonOrient.UseVisualStyleBackColor = true;
 			this.buttonNonOrient.Click += new System.EventHandler(this.buttonNonOrient_Click);
 			// 
